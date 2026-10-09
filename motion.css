@@ -1,0 +1,438 @@
+@import url("motion.js.css");
+/* =========================================================
+   JULK — LAYER 10
+   INTERACTION & MOTION SYSTEM
+   ========================================================= */
+
+:root {
+  --julk-transition-fast: 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  --julk-transition: 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  --julk-transition-slow: 650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------------------------------------------------------
+   GLOBAL
+   --------------------------------------------------------- */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  transition:
+    color var(--julk-transition-fast),
+    opacity var(--julk-transition-fast);
+}
+
+
+/* ---------------------------------------------------------
+   PAGE LOAD
+   --------------------------------------------------------- */
+
+.julk-page {
+  opacity: 0;
+  animation: julkPageIn 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes julkPageIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.julk-load-item {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: julkReveal 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.julk-load-item:nth-child(1) {
+  animation-delay: 100ms;
+}
+
+.julk-load-item:nth-child(2) {
+  animation-delay: 180ms;
+}
+
+.julk-load-item:nth-child(3) {
+  animation-delay: 260ms;
+}
+
+.julk-load-item:nth-child(4) {
+  animation-delay: 340ms;
+}
+
+@keyframes julkReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   NAVIGATION
+   --------------------------------------------------------- */
+
+.julk-nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition:
+    opacity var(--julk-transition-fast),
+    transform var(--julk-transition-fast);
+}
+
+.julk-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--julk-transition);
+}
+
+.julk-nav-link:hover::after,
+.julk-nav-link:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.julk-nav-link:hover {
+  transform: translateY(-1px);
+}
+
+
+/* ---------------------------------------------------------
+   SELECTED WORK
+   --------------------------------------------------------- */
+
+.julk-project {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.julk-project-image {
+  overflow: hidden;
+}
+
+.julk-project-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  transform: scale(1);
+  transition:
+    transform 800ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 500ms ease;
+}
+
+.julk-project:hover .julk-project-image img {
+  transform: scale(1.035);
+}
+
+.julk-project-info {
+  transition:
+    transform var(--julk-transition),
+    opacity var(--julk-transition);
+}
+
+.julk-project:hover .julk-project-info {
+  transform: translateY(-4px);
+}
+
+.julk-project-view {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  opacity: 0;
+  transform: translateX(-8px);
+
+  transition:
+    opacity var(--julk-transition),
+    transform var(--julk-transition);
+}
+
+.julk-project:hover .julk-project-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.julk-project-view::after {
+  content: "→";
+  transition: transform var(--julk-transition-fast);
+}
+
+.julk-project:hover .julk-project-view::after {
+  transform: translateX(4px);
+}
+
+
+/* ---------------------------------------------------------
+   CREATIVE DIMENSIONS
+   --------------------------------------------------------- */
+
+.julk-dimension {
+  position: relative;
+  transition:
+    transform var(--julk-transition),
+    opacity var(--julk-transition);
+}
+
+.julk-dimension:hover {
+  transform: translateY(-5px);
+}
+
+.julk-dimension-title {
+  transition:
+    letter-spacing var(--julk-transition),
+    transform var(--julk-transition);
+}
+
+.julk-dimension:hover .julk-dimension-title {
+  letter-spacing: 0.02em;
+  transform: translateX(4px);
+}
+
+
+/* ---------------------------------------------------------
+   EXPERIMENTS
+   --------------------------------------------------------- */
+
+.julk-experiment {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.julk-experiment img {
+  display: block;
+  width: 100%;
+
+  transition:
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 500ms ease;
+}
+
+.julk-experiment:hover img {
+  transform: scale(1.04);
+}
+
+.julk-experiment-overlay {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: flex-end;
+
+  padding: 24px;
+
+  opacity: 0;
+  transition: opacity var(--julk-transition);
+}
+
+.julk-experiment:hover .julk-experiment-overlay {
+  opacity: 1;
+}
+
+.julk-experiment-meta {
+  transform: translateY(12px);
+  transition: transform var(--julk-transition);
+}
+
+.julk-experiment:hover .julk-experiment-meta {
+  transform: translateY(0);
+}
+
+
+/* ---------------------------------------------------------
+   SCROLL REVEALS
+   --------------------------------------------------------- */
+
+.julk-reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.julk-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.julk-reveal-delay-1 {
+  transition-delay: 80ms;
+}
+
+.julk-reveal-delay-2 {
+  transition-delay: 160ms;
+}
+
+.julk-reveal-delay-3 {
+  transition-delay: 240ms;
+}
+
+
+/* ---------------------------------------------------------
+   CONTACT CTA
+   --------------------------------------------------------- */
+
+.julk-contact-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+
+  text-decoration: none;
+
+  transition:
+    gap var(--julk-transition),
+    transform var(--julk-transition);
+}
+
+.julk-contact-link:hover {
+  gap: 22px;
+  transform: translateX(3px);
+}
+
+.julk-contact-arrow {
+  display: inline-block;
+
+  transition:
+    transform var(--julk-transition);
+}
+
+.julk-contact-link:hover .julk-contact-arrow {
+  transform: translateX(5px);
+}
+
+
+/* ---------------------------------------------------------
+   IMAGE HOVER — GENERAL
+   --------------------------------------------------------- */
+
+.julk-image-hover {
+  overflow: hidden;
+}
+
+.julk-image-hover img {
+  transition:
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.julk-image-hover:hover img {
+  transform: scale(1.04);
+}
+
+
+/* ---------------------------------------------------------
+   BUTTONS
+   --------------------------------------------------------- */
+
+.julk-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  transition:
+    transform var(--julk-transition-fast),
+    opacity var(--julk-transition-fast);
+}
+
+.julk-button:hover {
+  transform: translateY(-2px);
+}
+
+.julk-button:active {
+  transform: translateY(0);
+}
+
+
+/* ---------------------------------------------------------
+   ACCESSIBILITY
+   --------------------------------------------------------- */
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+}
+
+
+/* ---------------------------------------------------------
+   REDUCED MOTION
+   --------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .julk-reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 768px) {
+
+  .julk-project-view {
+    opacity: 1;
+    transform: none;
+  }
+
+  .julk-project:hover .julk-project-image img,
+  .julk-experiment:hover img,
+  .julk-image-hover:hover img {
+    transform: none;
+  }
+
+  .julk-dimension:hover {
+    transform: none;
+  }
+
+  .julk-contact-link:hover {
+    gap: 14px;
+    transform: none;
+  }
+
+}
